@@ -6,8 +6,8 @@
 package dbmonitor;
 
 import database.Connect;
+import database.Monitor;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
@@ -19,9 +19,14 @@ public class DBMonitor {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Connection connection = Connect.connect();
-        connection.close();
+        Monitor m = new Monitor(connection);
+        Thread monitor = new Thread(m);
+        
+        monitor.start();
+        
+        //connection.close();
     }
     
 }
