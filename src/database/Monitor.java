@@ -14,10 +14,11 @@ import java.sql.Connection;
  */
 public class Monitor implements Runnable {
     private Connection c;
-    private final int REFRESH_TIME = 5000; //in milis
+    private int REFRESH_TIME; //in milis
     
-    public Monitor(Connection c) {
+    public Monitor(Connection c, int time) {
         this.c = c;
+        this.REFRESH_TIME = time * 1000;
     }
     
     
@@ -26,6 +27,7 @@ public class Monitor implements Runnable {
     public void run() {
         try {
             sleep(this.REFRESH_TIME);
+            
             Tablespaces ts = new Tablespaces(this.c);
             Thread tablespaces = new Thread(ts);
             tablespaces.start();

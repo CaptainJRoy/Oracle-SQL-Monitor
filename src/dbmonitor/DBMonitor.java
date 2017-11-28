@@ -21,7 +21,7 @@ public class DBMonitor {
      */
     public static void main(String[] args) throws SQLException {
         Connection connection = Connect.connect();
-        Monitor m = new Monitor(connection);
+        Monitor m = new Monitor(connection, 5);
         Thread monitor = new Thread(m);
         
         monitor.start();
