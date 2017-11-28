@@ -24,11 +24,7 @@ public class Tablespaces implements Runnable {
     @Override
     public void run() {
         try {
-            String getTS =  "column \"Tablespace\" format a13\n" +
-                            "column \"Used MB\"    format 99,999,999\n" +
-                            "column \"Free MB\"    format 99,999,999\n" +
-                            "column \"Total MB\"   format 99,999,999\n" +
-                            "select\n" +
+            String getTS =  "select\n" +
                             "   fs.tablespace_name                          \"Tablespace\",\n" +
                             "   (df.totalspace - fs.freespace)              \"Used MB\",\n" +
                             "   fs.freespace                                \"Free MB\",\n" +
