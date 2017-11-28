@@ -8,66 +8,86 @@ package database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 
 /**
  *
  * @author joaor
  */
 public class Tablespaces implements Runnable {
-    private Connection c;
+    class TableInfo {
+        public String tablespace;
+        public float pct_used;
+        public float total_mb;
+        public float used_mb;
+        public float free_mb;
+        public float datafiles;
+        
+        public TableInfo(String t, float p, float tot, float u, float f, float d) {
+            this.tablespace = t;
+            this.pct_used = p;
+            this.total_mb = tot;
+            this.used_mb = u;
+            this.free_mb = f;
+            this.datafiles = d;
+        }
+    }
     
+    
+    private Connection c;
+    private HashMap<String, TableInfo> tablespaces;
+
     
     public Tablespaces(Connection c) {
         this.c = c;
+        this.tablespaces = new HashMap<>();
     }
     
-    @Override
-    public void run() {
+    
+    private void read_Tablespaces() {
         try {
-            String getTS =  "column \"Tablespace\" format a13\n" +
-                            "column \"Used MB\"    format 99,999,999\n" +
-                            "column \"Free MB\"    format 99,999,999\n" +
-                            "column \"Total MB\"   format 99,999,999\n" +
-                            "select\n" +
-                            "   fs.tablespace_name                          \"Tablespace\",\n" +
-                            "   (df.totalspace - fs.freespace)              \"Used MB\",\n" +
-                            "   fs.freespace                                \"Free MB\",\n" +
-                            "   df.totalspace                               \"Total MB\",\n" +
-                            "   round(100 * (fs.freespace / df.totalspace)) \"Pct. Free\"\n" +
-                            "from\n" +
-                            "   (select\n" +
-                            "      tablespace_name,\n" +
-                            "      round(sum(bytes) / 1048576) TotalSpace\n" +
-                            "   from\n" +
-                            "      dba_data_files\n" +
-                            "   group by\n" +
-                            "      tablespace_name\n" +
-                            "   ) df,\n" +
-                            "   (select\n" +
-                            "      tablespace_name,\n" +
-                            "      round(sum(bytes) / 1048576) FreeSpace\n" +
-                            "   from\n" +
-                            "      dba_free_space\n" +
-                            "   group by\n" +
-                            "      tablespace_name\n" +
-                            "   ) fs\n" +
-                            "where\n" +
-                            "   df.tablespace_name = fs.tablespace_name";
+            String getTS =  "SELECT  a.tablespace_name tablespace,\n" +
+                            "    ROUND (((c.BYTES - NVL (b.BYTES, 0)) / c.BYTES) * 100,2) \"Pct. Used\",\n" +
+                            "    c.BYTES / 1024 / 1024 \"Total MB\",\n" +
+                            "    ROUND (c.BYTES / 1024 / 1024 - NVL (b.BYTES, 0) / 1024 / 1024,2) \"Used MB\",\n" +
+                            "    ROUND (NVL (b.BYTES, 0) / 1024 / 1024, 2) \"Free MB\", \n" +
+                            "    c.DATAFILES\n" +
+                            "  FROM dba_tablespaces a,\n" +
+                            "       (    SELECT   tablespace_name, \n" +
+                            "                  SUM (BYTES) BYTES\n" +
+                            "           FROM   dba_free_space\n" +
+                            "       GROUP BY   tablespace_name\n" +
+                            "       ) b,\n" +
+                            "      (    SELECT   COUNT (1) DATAFILES, \n" +
+                            "                  SUM (BYTES) BYTES, \n" +
+                            "                  tablespace_name\n" +
+                            "           FROM   dba_data_files\n" +
+                            "       GROUP BY   tablespace_name\n" +
+                            "    ) c\n" +
+                            "  WHERE b.tablespace_name(+) = a.tablespace_name \n" +
+                            "    AND c.tablespace_name(+) = a.tablespace_name\n" +
+                            "ORDER BY NVL (((c.BYTES - NVL (b.BYTES, 0)) / c.BYTES), 0) DESC";
             PreparedStatement ps = this.c.prepareStatement(getTS);
             ResultSet rs = ps.executeQuery();
-            System.out.println(rs);
             
             while(rs.next()) {
-                System.out.println("Tablespace: " + rs.getString(1) + "\t\t" +
-                                   "Used MB: " + rs.getFloat(2) + "\t\t" +
-                                   "Free MB: " + rs.getFloat(3) + "\t\t" +
-                                   "Total MB: " + rs.getFloat(4) + "\t\t" +
-                                   "Pct. Free: " + rs.getFloat(5));
+                if(tablespaces.get(rs.getString(1)) != null)
+                    tablespaces.replace(rs.getString(1),
+                                new TableInfo(rs.getString(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6)));
+                else tablespaces.put(rs.getString(1),
+                                     new TableInfo(rs.getString(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6)));
             }
         }
         catch (Exception e) {
             System.out.println("Error getting Tablespaces!");
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public void run() {
+        this.read_Tablespaces();
+        
+        //System.out.println(tablespaces.toString());
     }
 }
