@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package dbmonitor;
 
+import database.Datafiles;
+import database.Tablespaces;
+import database.Users;
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
 
@@ -35,6 +38,10 @@ public class Monitor implements Runnable {
             Users us = new Users(this.c);
             Thread usrs = new Thread(us);
             usrs.start();
+            
+            Datafiles dfs = new Datafiles(this.c);
+            Thread datafiles = new Thread(dfs);
+            datafiles.start();
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");
