@@ -6,7 +6,6 @@
 package dbmonitor;
 
 import database.Connect;
-import database.Monitor;
 import java.sql.Connection;
 import java.sql.SQLException;
 
