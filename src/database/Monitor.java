@@ -29,6 +29,9 @@ public class Monitor implements Runnable {
             Tablespaces ts = new Tablespaces(this.c);
             Thread tablespaces = new Thread(ts);
             tablespaces.start();
+            Users us = new Users(this.c);
+            Thread usrs = new Thread(us);
+            usrs.start();
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");
