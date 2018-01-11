@@ -36,8 +36,8 @@ public class Monitor implements Runnable {
             tablespaces.start();
             
             Users us = new Users(this.c);
-            Thread usrs = new Thread(us);
-            usrs.start();
+            Thread users = new Thread(us);
+            users.start();
             
             Datafiles dfs = new Datafiles(this.c);
             Thread datafiles = new Thread(dfs);

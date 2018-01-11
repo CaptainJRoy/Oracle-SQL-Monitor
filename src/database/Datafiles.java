@@ -16,21 +16,21 @@ import java.util.HashMap;
  */
 public class Datafiles implements Runnable{
     class DataFileInfo {
-        /*public String tablespace;
+        public String tablespace;
         public float pct_used;
         public float total_mb;
         public float used_mb;
         public float free_mb;
         public float datafiles;
         
-        public TableInfo(String t, float p, float tot, float u, float f, float d) {
+        public DataFileInfo(String t, float p, float tot, float u, float f, float d) {
             this.tablespace = t;
             this.pct_used = p;
             this.total_mb = tot;
             this.used_mb = u;
             this.free_mb = f;
             this.datafiles = d;
-        }*/
+        }
     }
     
     
@@ -72,9 +72,10 @@ public class Datafiles implements Runnable{
             
             while(rs.next()) {
                 if(datafiles.get(rs.getString(1)) != null)
-                    datafiles.replace(rs.getString(1), new DataFileInfo());
-                else datafiles.put(rs.getString(1), new DataFileInfo());
+                    datafiles.replace(rs.getString(1), new DataFileInfo(rs.getString(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6)));
+                else datafiles.put(rs.getString(1), new DataFileInfo(rs.getString(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6)));
             }
+            System.out.println("Datafiles: " + datafiles.toString());
         }
         catch (Exception e) {
             System.out.println("Error getting Datafiles!");

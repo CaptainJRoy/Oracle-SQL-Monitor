@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 
 /**
@@ -73,6 +72,8 @@ public class Users implements Runnable {
                 //System.out.println(usersinfo.get(rs.getString(1)).to_String());
                 //System.out.print("\n\n\n");
             }
+            
+            System.out.println("Users: " + usersinfo.toString());
         }
         catch(Exception e){
             System.out.println("Error getting Users!");
