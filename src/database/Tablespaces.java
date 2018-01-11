@@ -77,6 +77,8 @@ public class Tablespaces implements Runnable {
                 else tablespaces.put(rs.getString(1),
                                      new TableInfo(rs.getString(1), rs.getFloat(2), rs.getFloat(3), rs.getFloat(4), rs.getFloat(5), rs.getFloat(6)));
             }
+            
+            System.out.println("Tablespaces: " + tablespaces.toString());
         }
         catch (Exception e) {
             System.out.println("Error getting Tablespaces!");
@@ -87,6 +89,5 @@ public class Tablespaces implements Runnable {
     @Override
     public void run() {
         this.read_Tablespaces();
-        System.out.println("Tablespaces: " + tablespaces.toString());
     }
 }

@@ -46,9 +46,6 @@ public class Users implements Runnable {
             return sb.toString();
             }
         }
-        
-    
- 
     
     private Connection c;
     private HashMap<String, UsersInfo> usersinfo;
@@ -64,13 +61,13 @@ public class Users implements Runnable {
             String getUsers = "select username, default_tablespace, temporary_tablespace, local_temp_tablespace, last_login from dba_users";
             PreparedStatement ps = this.c.prepareStatement(getUsers);
             ResultSet rs = ps.executeQuery();
-            //System.out.println(rs);
             
             while(rs.next()) {
-                usersinfo.put(rs.getString(1),
+                if(usersinfo.get(rs.getString(1)) != null)
+                    usersinfo.replace(rs.getString(1),
                         new UsersInfo(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5)));
-                //System.out.println(usersinfo.get(rs.getString(1)).to_String());
-                //System.out.print("\n\n\n");
+                else usersinfo.put(rs.getString(1),
+                        new UsersInfo(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getDate(5)));
             }
             
             System.out.println("Users: " + usersinfo.toString());
