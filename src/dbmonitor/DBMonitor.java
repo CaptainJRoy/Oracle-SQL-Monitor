@@ -21,7 +21,9 @@ public class DBMonitor {
      */
     public static void main(String[] args) throws SQLException {
         Connection connection = Connect.connect();
-        Monitor m = new Monitor(connection, 5);
+        
+        //10 Specifies the time interval in seconds to reprobe the DB
+        Monitor m = new Monitor(connection, 10);
         Thread monitor = new Thread(m);
         
         monitor.start();
