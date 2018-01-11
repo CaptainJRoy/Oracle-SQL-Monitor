@@ -5,11 +5,7 @@
  */
 package dbmonitor;
 
-import database.Datafiles;
-import database.Grants;
-import database.Table;
-import database.Tablespaces;
-import database.Users;
+import database.*;
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
 
@@ -52,6 +48,10 @@ public class Monitor implements Runnable {
             Table tab = new Table(this.c);
             Thread tables = new Thread(tab);
             tables.start();
+            
+            Sessions ses = new Sessions(this.c);
+            Thread sessions = new Thread(ses);
+            sessions.start();
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");
