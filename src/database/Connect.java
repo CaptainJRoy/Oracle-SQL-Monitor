@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connect {
-
     public static Connection connect() throws SQLException {
         System.out.println("-------- Oracle JDBC Connection Testing ------");
 
@@ -32,5 +31,4 @@ public class Connect {
         else System.out.println("Failed to make connection!");
         return connection;
     }
-
 }

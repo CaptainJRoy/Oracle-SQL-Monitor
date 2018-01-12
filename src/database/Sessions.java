@@ -8,7 +8,6 @@ package database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
 /**
  *
@@ -50,7 +49,8 @@ public class Sessions implements Runnable {
                             "substr(b.osuser,1,8) os_user,  \n" +
                             "substr(b.program,1,28) program \n" +
                             "from v$session b, v$process a \n" +
-                            "where b.paddr = a.addr \n";
+                            "where b.paddr = a.addr \n" +
+                            "order by sid asc";
             
             PreparedStatement ps = this.c.prepareStatement(getTS);
             ResultSet rs = ps.executeQuery();
