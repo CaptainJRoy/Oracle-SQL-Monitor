@@ -56,6 +56,10 @@ public class Monitor implements Runnable {
             CPU cpu = new CPU(this.c);
             Thread cpu_info = new Thread(cpu);
             cpu_info.start();
+            
+            Memory mem = new Memory(this.c);
+            Thread memory = new Thread(mem);
+            memory.start();
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");
