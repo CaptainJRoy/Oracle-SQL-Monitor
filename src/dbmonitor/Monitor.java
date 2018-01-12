@@ -52,6 +52,10 @@ public class Monitor implements Runnable {
             Sessions ses = new Sessions(this.c);
             Thread sessions = new Thread(ses);
             sessions.start();
+            
+            CPU cpu = new CPU(this.c);
+            Thread cpu_info = new Thread(cpu);
+            cpu_info.start();
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");
