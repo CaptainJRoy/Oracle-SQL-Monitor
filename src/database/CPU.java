@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class CPU implements Runnable {
 
     private Connection c;
-    private HashMap<String, Float> cpu = new HashMap<>();
+    public HashMap<String, Float> cpu = new HashMap<>();
 
     public CPU(Connection c) {
         this.c = c;
