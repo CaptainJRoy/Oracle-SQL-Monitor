@@ -26,7 +26,7 @@ public class CPU implements Runnable {
     public void read_CPU_Stats() {
         try {
             String getTS =  "select stat_name, value, comments from v$osstat\n" +
-                            "where stat_name in ('IDLE_TIME', 'NUM_CPUS', 'IDLE_TIME', 'BUSY_TIME', 'USER_TIME', 'IOWAIT_TIME', 'NICE_TIME', 'NUM_CPU_CORES')";
+                            "where stat_name in ('IDLE_TIME', 'NUM_CPUS', 'BUSY_TIME', 'USER_TIME', 'IOWAIT_TIME', 'NICE_TIME', 'NUM_CPU_CORES')";
             
             PreparedStatement ps = this.c.prepareStatement(getTS);
             ResultSet rs = ps.executeQuery();
