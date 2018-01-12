@@ -33,7 +33,7 @@ public class Datafiles implements Runnable{
     
     
     private Connection c;
-    private HashMap<String, DataFileInfo> datafiles;
+    public HashMap<String, DataFileInfo> datafiles;
 
     
     public Datafiles(Connection c) {

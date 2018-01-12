@@ -16,50 +16,58 @@ import java.sql.Connection;
 public class Monitor implements Runnable {
     private Connection c;
     private int REFRESH_TIME; //in milis
+    public Tablespaces ts;
+    public Users us;
+    public Datafiles dfs;
+    public Grants gran;
+    public Table tab;
+    public Sessions ses;
+    public CPU cpu;
+    public Memory mem;
     
     public Monitor(Connection c, int time) {
         this.c = c;
         this.REFRESH_TIME = time * 1000;
     }
-    
-    
+
     
     @Override
     public void run() {
         try {
-            sleep(this.REFRESH_TIME);
-            
-            Tablespaces ts = new Tablespaces(this.c);
-            Thread tablespaces = new Thread(ts);
+            ts = new Tablespaces(c);
+            us = new Users(c);
+            dfs = new Datafiles(c);
+            gran = new Grants(c);
+            tab = new Table(c);
+            ses = new Sessions(c);
+            cpu = new CPU(c);
+            mem = new Memory(c);
+        
+            Thread tablespaces = new Thread(this.ts);
             tablespaces.start();
             
-            Users us = new Users(this.c);
-            Thread users = new Thread(us);
+            Thread users = new Thread(this.us);
             users.start();
             
-            Datafiles dfs = new Datafiles(this.c);
-            Thread datafiles = new Thread(dfs);
+            Thread datafiles = new Thread(this.dfs);
             datafiles.start();
             
-            Grants gran = new Grants(this.c);
-            Thread grants = new Thread(gran);
+            Thread grants = new Thread(this.gran);
             grants.start();
             
-            Table tab = new Table(this.c);
-            Thread tables = new Thread(tab);
+            Thread tables = new Thread(this.tab);
             tables.start();
             
-            Sessions ses = new Sessions(this.c);
-            Thread sessions = new Thread(ses);
+            Thread sessions = new Thread(this.ses);
             sessions.start();
             
-            CPU cpu = new CPU(this.c);
-            Thread cpu_info = new Thread(cpu);
+            Thread cpu_info = new Thread(this.cpu);
             cpu_info.start();
             
-            Memory mem = new Memory(this.c);
-            Thread memory = new Thread(mem);
+            Thread memory = new Thread(this.mem);
             memory.start();
+            
+            sleep(this.REFRESH_TIME);
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");

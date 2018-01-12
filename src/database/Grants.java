@@ -49,7 +49,7 @@ public class Grants implements Runnable {
     }
     
     private Connection c;
-    private HashMap<String, UsersInfo> usersinfo;
+    public HashMap<String, UsersInfo> usersinfo;
     
         public Grants(Connection c) {
         this.c = c;

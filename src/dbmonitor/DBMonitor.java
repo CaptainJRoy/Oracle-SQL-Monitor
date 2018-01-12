@@ -27,6 +27,7 @@ public class DBMonitor {
         Thread monitor = new Thread(m);
         
         monitor.start();
+        monitor.toString();
         
         //connection.close();
     }

@@ -36,7 +36,7 @@ public class Memory implements Runnable {
     }
        
     private Connection c;
-    private MemoryInfo memoryInfo;
+    public MemoryInfo memoryInfo;
     
     public Memory(Connection c) {
         this.c = c;

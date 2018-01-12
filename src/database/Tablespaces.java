@@ -35,7 +35,7 @@ public class Tablespaces implements Runnable {
     
     
     private Connection c;
-    private HashMap<String, TableInfo> tablespaces;
+    public HashMap<String, TableInfo> tablespaces;
 
     
     public Tablespaces(Connection c) {

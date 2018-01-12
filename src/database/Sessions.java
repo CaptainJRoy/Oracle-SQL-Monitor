@@ -32,7 +32,7 @@ public class Sessions implements Runnable {
     }
     
     private Connection c;
-    private HashMap<String, SessionsInfo> sessions;
+    public HashMap<String, SessionsInfo> sessions;
     
     
      public Sessions(Connection c) {

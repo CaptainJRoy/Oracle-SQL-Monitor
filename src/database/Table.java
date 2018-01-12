@@ -31,7 +31,7 @@ public class Table implements Runnable {
     
     
     private Connection c;
-    private ArrayList<TablesInfo> tables = new ArrayList<>();
+    public ArrayList<TablesInfo> tables = new ArrayList<>();
 
     
     public Table(Connection c) {

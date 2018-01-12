@@ -48,7 +48,7 @@ public class Users implements Runnable {
         }
     
     private Connection c;
-    private HashMap<String, UsersInfo> usersinfo;
+    public HashMap<String, UsersInfo> usersinfo;
     
         public Users(Connection c) {
         this.c = c;
