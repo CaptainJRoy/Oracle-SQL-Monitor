@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 public class Connect {
     public static Connection connect() throws SQLException {
-        System.out.println("-------- Oracle JDBC Connection Testing ------");
-
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException e) {
@@ -27,7 +25,7 @@ public class Connect {
             return null;
         }
 
-        if (connection != null) System.out.println("You made it, take control your database now!");
+        if (connection != null) System.out.println("Connection Estabilished!");
         else System.out.println("Failed to make connection!");
         return connection;
     }

@@ -15,22 +15,6 @@ import java.util.HashMap;
  * @author joaor
  */
 public class Datafiles implements Runnable{
-    class DataFileInfo {
-        public String tablespace;
-        public String datafile;
-        public float total_mb;
-        public float used_mb;
-        public float pct_used;
-        
-        public DataFileInfo(String t, String d, float tot, float u, float p) {
-            this.tablespace = t;
-            this.datafile = d;
-            this.total_mb = tot;
-            this.used_mb = u;
-            this.pct_used = p;
-        }
-    }
-    
     
     private Connection c;
     public HashMap<String, DataFileInfo> datafiles;

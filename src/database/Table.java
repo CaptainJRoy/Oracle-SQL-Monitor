@@ -15,21 +15,6 @@ import java.util.ArrayList;
  * @author joaor
  */
 public class Table implements Runnable {
-    class TablesInfo {
-        public String schema;
-        public String object;
-        public float object_size;
-        public String tablespace;
-        
-        public TablesInfo(String s, String o, float obj, String u) {
-            this.schema = s;
-            this.object = o;
-            this.object_size = obj;
-            this.tablespace = u;
-        }
-    }
-    
-    
     private Connection c;
     public ArrayList<TablesInfo> tables = new ArrayList<>();
 

@@ -8,7 +8,6 @@ package dbmonitor;
 import database.Connect;
 import insertionDB.CreateTables;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  *
@@ -16,24 +15,23 @@ import java.sql.SQLException;
  */
 public class DBMonitor {
 
-    /**
-     * @param args the command line arguments
-     * @throws java.sql.SQLException
-     */
-    public static void main(String[] args) throws SQLException {
-        Connection connection = Connect.connect();
-        
-        CreateTables cT = new CreateTables(connection);
-        Thread cTThread = new Thread(cT);
-        cTThread.start();
-        
-        
-        //10 Specifies the time interval in seconds to reprobe the DB
-        Monitor m = new Monitor(connection, 4);
-        Thread monitor = new Thread(m);
-        monitor.start();
-        
-        //connection.close();
+    
+    public static void main(String[] args) {
+        try {
+            Connection connection = Connect.connect();
+            CreateTables cT = new CreateTables(connection);
+            Thread cTThread = new Thread(cT);
+            cTThread.start();
+
+            //10 Specifies the time interval in seconds to reprobe the DB
+            Connection connection2 = Connect.connect();
+            Monitor m = new Monitor(connection2, 10);
+            Thread monitor = new Thread(m);
+            monitor.start();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

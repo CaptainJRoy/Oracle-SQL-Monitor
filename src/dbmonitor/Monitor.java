@@ -9,6 +9,9 @@ import database.*;
 import insertionDB.*;
 import static java.lang.Thread.sleep;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +19,7 @@ import java.sql.Connection;
  */
 public class Monitor implements Runnable {
     private Connection c;
+    private Connection c2;
     private int REFRESH_TIME; //in milis
     public Tablespaces ts;
     public Users us;
@@ -29,8 +33,12 @@ public class Monitor implements Runnable {
     
     public Monitor(Connection c, int time) {
         this.c = c;
+        try {
+            this.c2 = new Connect().connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(Monitor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.REFRESH_TIME = time * 1000;
-        this.dbinfo = new DataBaseInfo(this.c, this);
     }
 
     
@@ -45,8 +53,7 @@ public class Monitor implements Runnable {
             ses = new Sessions(c);
             cpu = new CPU(c);
             mem = new Memory(c);
-        
-            sleep(this.REFRESH_TIME);
+            dbinfo = new DataBaseInfo(c2, ts.tablespaces, us.usersinfo, dfs.datafiles, gran.usersinfo, tab.tables, ses.sessions, cpu.cpu, mem.memoryInfo);
             
             Thread tablespaces = new Thread(this.ts);
             tablespaces.start();
@@ -71,12 +78,20 @@ public class Monitor implements Runnable {
             
             Thread memory = new Thread(this.mem);
             memory.start();
+
+            tablespaces.join();
+            users.join();
+            datafiles.join();
+            grants.join();
+            tables.join();
+            sessions.join();
+            cpu_info.join();
+            memory.join();
             
-            sleep(3);
-            System.out.println(this.mem.memoryInfo.pga);
-            dbinfo = new DataBaseInfo(c, this);
             Thread insertDB = new Thread(this.dbinfo);
             insertDB.start();
+            
+            sleep(this.REFRESH_TIME);
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");

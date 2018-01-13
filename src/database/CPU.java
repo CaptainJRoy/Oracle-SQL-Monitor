@@ -35,7 +35,7 @@ public class CPU implements Runnable {
                 if(rs.getString(3).contains("(centi-secs)")) cpu.put(rs.getString(1), rs.getFloat(2)/100);
                 else cpu.put(rs.getString(1), rs.getFloat(2));
             
-            System.out.println("CPU: " + cpu.toString());
+            //System.out.println("CPU: " + cpu.toString());
         }
         catch (Exception e) {
             System.out.println("Error getting CPU Stats!");

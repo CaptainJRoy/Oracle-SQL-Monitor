@@ -5,15 +5,9 @@
  */
 package insertionDB;
 
-import database.Table;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Scanner;
 
 /**
  *
@@ -24,6 +18,17 @@ public class CreateTables implements Runnable {
     
     public CreateTables(Connection c) {
         this.c = c;
+    }
+    
+    private void clearTabela(String name) {
+        try {
+            String getTS =  "DELETE (SELECT * FROM " + name + ")";
+            PreparedStatement ps = this.c.prepareStatement(getTS);
+            ResultSet rs = ps.executeQuery();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
     private void dropTabela(String name) {
@@ -49,13 +54,21 @@ public class CreateTables implements Runnable {
     
     @Override
     public void run() {
+        clearTabela("MEMORY");
         dropTabela("MEMORY");
+        clearTabela("CPU");
         dropTabela("CPU");
+        clearTabela("TABLES");
         dropTabela("TABLES");
+        clearTabela("TABLESPACES");
         dropTabela("TABLESPACES");
+        clearTabela("DATAFILES");
         dropTabela("DATAFILES");
+        clearTabela("USERS");
         dropTabela("USERS");
+        clearTabela("GRANTS");
         dropTabela("GRANTS");
+        clearTabela("SESSIONS");
         dropTabela("SESSIONS");
         criaTabela("CREATE TABLE MEMORY \n" +
                     "(\n" +
@@ -198,5 +211,11 @@ public class CreateTables implements Runnable {
                     "  TABLESPACE\n" +
                     ")\n" +
                     "ENABLE");
+        System.out.println("Tabelas inicializadas com sucesso!");
+        try {
+            this.c.close();
+        } catch (Exception e) {
+            System.out.println("Erro a fechar ligação!");
+        }
     }
 }
