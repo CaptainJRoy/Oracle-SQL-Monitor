@@ -5,8 +5,11 @@
  */
 package insertionDB;
 
+import database.Memory;
 import dbmonitor.Monitor;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -22,11 +25,12 @@ public class DataBaseInfo implements Runnable {
     }
     
     
-    private void save_info() {
+    private void save_info_memory(Memory m) {
         try{
-            /*String info = "";
-            PreparedStatement ps = this.c.prepareStatement(info);            CHANGEMEEEEEE
-            */
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd hh:mm:ss");
+            String dataStr = ft.format(date);
+            m.write(dataStr);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -37,12 +41,6 @@ public class DataBaseInfo implements Runnable {
     
     @Override
     public void run() {
-        try{
-            save_info();
-        }
-        catch(Exception e) {
-            System.out.println("Error saving records!");
-            e.printStackTrace();
-        }
+        save_info_memory(this.m.mem);
     }
 }

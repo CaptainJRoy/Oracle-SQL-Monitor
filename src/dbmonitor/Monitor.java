@@ -45,8 +45,9 @@ public class Monitor implements Runnable {
             ses = new Sessions(c);
             cpu = new CPU(c);
             mem = new Memory(c);
-            dbinfo = new DataBaseInfo(c, this);
         
+            sleep(this.REFRESH_TIME);
+            
             Thread tablespaces = new Thread(this.ts);
             tablespaces.start();
             
@@ -71,10 +72,11 @@ public class Monitor implements Runnable {
             Thread memory = new Thread(this.mem);
             memory.start();
             
+            sleep(3);
+            System.out.println(this.mem.memoryInfo.pga);
+            dbinfo = new DataBaseInfo(c, this);
             Thread insertDB = new Thread(this.dbinfo);
             insertDB.start();
-            
-            sleep(this.REFRESH_TIME);
         }
         catch (Exception e) {
             System.out.println("Monitor stopped working!");

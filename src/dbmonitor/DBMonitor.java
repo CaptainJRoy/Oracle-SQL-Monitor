@@ -6,6 +6,7 @@
 package dbmonitor;
 
 import database.Connect;
+import insertionDB.CreateTables;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -22,10 +23,14 @@ public class DBMonitor {
     public static void main(String[] args) throws SQLException {
         Connection connection = Connect.connect();
         
-        //10 Specifies the time interval in seconds to reprobe the DB
-        Monitor m = new Monitor(connection, 10);
-        Thread monitor = new Thread(m);
+        CreateTables cT = new CreateTables(connection);
+        Thread cTThread = new Thread(cT);
+        cTThread.start();
         
+        
+        //10 Specifies the time interval in seconds to reprobe the DB
+        Monitor m = new Monitor(connection, 4);
+        Thread monitor = new Thread(m);
         monitor.start();
         
         //connection.close();

@@ -9,14 +9,14 @@ package database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author Bruno'
  */
 public class Memory implements Runnable {
-
-    class MemoryInfo{
+    public class MemoryInfo{
         public float sga;
         public float pga;
            
@@ -24,7 +24,7 @@ public class Memory implements Runnable {
             this.sga = sga;
             this.pga = pga;
         }
-
+        
         public String to_string(){
             StringBuilder sb = new StringBuilder();
             sb.append("SGA: ");
@@ -43,6 +43,15 @@ public class Memory implements Runnable {
         this.memoryInfo = new MemoryInfo(0, 0);
     }
            
+    
+    public void write(String dataStr) throws SQLException {
+        String run =  "insert into memory values(TO_DATE('" +
+                       dataStr + "', 'YYYY/MM/DD HH:MI:SS'), " +
+                       this.memoryInfo.sga + ", " + this.memoryInfo.pga + ")";
+        
+        PreparedStatement ps = this.c.prepareStatement(run);
+        ResultSet rs = ps.executeQuery();
+    }
     
     public void get_Memory_stats() {
         try {
@@ -65,6 +74,8 @@ public class Memory implements Runnable {
         catch (Exception e) {
             System.out.println("Error getting Memory Stats!");
             e.printStackTrace();
+        }
+        finally {
         }
     }
     
