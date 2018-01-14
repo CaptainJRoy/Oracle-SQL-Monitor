@@ -119,6 +119,7 @@ public class CreateTables implements Runnable {
                     "  (\n" +
                     "    SID\n" +
                     "  , OS_USER\n" +
+                    "  , TIMESTAMP\n" +
                     "  )\n" +
                     "  ENABLE \n" +
                     ")");

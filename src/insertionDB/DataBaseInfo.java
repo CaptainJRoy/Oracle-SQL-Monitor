@@ -75,7 +75,6 @@ public class DataBaseInfo implements Runnable {
             SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd hh:mm:ss");
             String dataStr = ft.format(date);
             
-            System.out.println(this.cpu.toString());
             float idle_time = this.cpu.get("IDLE_TIME");
             float num_cpu = this.cpu.get("NUM_CPUS");
             float busy_time = this.cpu.get("BUSY_TIME");
@@ -89,7 +88,6 @@ public class DataBaseInfo implements Runnable {
                         num_cpu_cores + ", " + iowait_time +
                         ", " + nice_time + ", " + busy_time + ", " +
                         user_time + ", " + num_cpu + ", " + idle_time + ")";
-            System.out.println();
             PreparedStatement ps = this.c.prepareStatement(run);
             ResultSet rs = ps.executeQuery();
         }
@@ -100,9 +98,33 @@ public class DataBaseInfo implements Runnable {
     }
     
     
+    private void save_info_sessions(){
+        try{
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd hh:mm:ss");
+            String dataStr = ft.format(date);
+            
+            for (SessionsInfo value : sessions.values()) {
+            String run =  "insert into sessions values(" + value.sid + ", TO_DATE('" +
+                          dataStr + "', 'YYYY/MM/DD HH:MI:SS'), '" + value.box + "', '" +
+                          value.os_user + "', '" + value.program + "')";
+            
+            PreparedStatement ps = this.c.prepareStatement(run);
+            ResultSet rs = ps.executeQuery();
+        }
+            }
+        catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro na escrita de dados sessions!");
+        
+        }
+    }
+    
+    
     @Override
     public void run() {
         save_info_memory();
         save_info_cpu();
+        save_info_sessions();
     }
 }

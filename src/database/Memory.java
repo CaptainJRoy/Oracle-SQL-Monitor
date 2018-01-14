@@ -45,8 +45,6 @@ public class Memory implements Runnable {
             System.out.println("Error getting Memory Stats!");
             e.printStackTrace();
         }
-        finally {
-        }
     }
     
     @Override
