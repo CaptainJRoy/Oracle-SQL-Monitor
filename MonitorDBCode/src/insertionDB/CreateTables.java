@@ -130,7 +130,7 @@ public class CreateTables implements Runnable {
                     ", ADMIN_OPTION INT NOT NULL \n" +
                     ", COMMON INT NOT NULL \n" +
                     ", INHERITED INT NOT NULL \n" +
-                    ", COLUMN1 DATE NOT NULL \n" +
+                    ", TIMESTAMP DATE NOT NULL \n" +
                     ", CONSTRAINT GRANTS_PK PRIMARY KEY \n" +
                     "  (\n" +
                     "    GRANTEE \n" +
