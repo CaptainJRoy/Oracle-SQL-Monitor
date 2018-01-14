@@ -22,10 +22,10 @@ public class DBMonitor {
             CreateTables cT = new CreateTables(connection);
             Thread cTThread = new Thread(cT);
             cTThread.start();
-
-            //10 Specifies the time interval in seconds to reprobe the DB
+            cTThread.join();
+            //60 Specifies the time interval in seconds to reprobe the DB
             Connection connection2 = Connect.connect();
-            Monitor m = new Monitor(connection2, 10);
+            Monitor m = new Monitor(connection2, 60);
             Thread monitor = new Thread(m);
             monitor.start();
 

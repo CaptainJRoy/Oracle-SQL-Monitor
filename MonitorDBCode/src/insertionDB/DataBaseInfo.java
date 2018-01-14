@@ -105,18 +105,133 @@ public class DataBaseInfo implements Runnable {
             String dataStr = ft.format(date);
             
             for (SessionsInfo value : sessions.values()) {
-            String run =  "insert into sessions values(" + value.sid + ", TO_DATE('" +
-                          dataStr + "', 'YYYY/MM/DD HH:MI:SS'), '" + value.box + "', '" +
-                          value.os_user + "', '" + value.program + "')";
-            
-            PreparedStatement ps = this.c.prepareStatement(run);
-            ResultSet rs = ps.executeQuery();
-        }
+                String run =  "insert into sessions values(" + value.sid + ", TO_DATE('" +
+                              dataStr + "', 'YYYY/MM/DD HH:MI:SS'), '" + value.box + "', '" +
+                              value.os_user + "', '" + value.program + "')";
+
+                PreparedStatement ps = this.c.prepareStatement(run);
+                ResultSet rs = ps.executeQuery();
             }
+        }
         catch(Exception e) {
             e.printStackTrace();
             System.out.println("Erro na escrita de dados sessions!");
         
+        }
+    }
+    
+    private HashMap<String, String> tableset_datafile;
+    private void save_info_datafiles(){
+        try{
+            for(DataFileInfo value : datafile.values()) {
+                String run =  "insert into datafiles values('" + value.datafile + "', " +
+                              value.total_mb + ", " + value.used_mb + ", " +
+                              value.pct_used + ")";
+
+                PreparedStatement ps = this.c.prepareStatement(run);
+                ResultSet rs = ps.executeQuery();
+            }
+        }
+        catch(Exception e) {
+            System.out.println("Nenhum datafile novo!");
+        }
+        finally {
+            tableset_datafile = new HashMap<>();
+            for(DataFileInfo value : datafile.values()) tableset_datafile.put(value.tablespace, value.datafile);
+        }
+    }
+    
+    
+    private void save_info_grants(){
+        try{
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd hh:mm:ss");
+            String dataStr = ft.format(date);
+            
+            for (UsersGrantInfo value : grants.values()) {
+                for(int i = 0; i < value.privilege.size(); i++) {
+                    String run =  "insert into grants values('" + value.grantee + "', '" + value.privilege.get(i) + "', " +
+                              (value.admin_option.get(i)?1:0) + ", " + (value.common.get(i)?1:0) + ", " +
+                              (value.inherited.get(i)?1:0) + ", TO_DATE('" + dataStr + "', 'YYYY/MM/DD HH:MI:SS'))";
+
+                    PreparedStatement ps = this.c.prepareStatement(run);
+                    ResultSet rs = ps.executeQuery();
+                }
+            }
+        }
+        catch(Exception e) {
+            System.out.println("Nenhum grant novo!");
+        }
+    }
+    
+    
+    private HashMap<String, ArrayList<String>> tableset_user;
+    private void save_info_users(){
+        try{
+            tableset_user = new HashMap<>();
+            for (UsersInfo value : users.values()) {
+                if(tableset_user.containsKey(value.default_tablespace)) {
+                    tableset_user.get(value.default_tablespace).add(value.userName);
+                }
+                else {
+                    tableset_user.put(value.default_tablespace, new ArrayList<>());
+                    tableset_user.get(value.default_tablespace).add(value.userName);
+                }
+                String run =  "insert into users values('" + value.userName + "', '" + value.default_tablespace + "', '" +
+                              value.temporary_tablespace + "',";
+                if(value.last_login != null) 
+                    run +=  "TO_DATE('" + value.last_login + "', 'YYYY-MM-DD HH:MI:SS'), '";
+                else run += "NULL, '";
+                run += value.userName + "')";
+                PreparedStatement ps = this.c.prepareStatement(run);
+                ResultSet rs = ps.executeQuery();
+            }
+        }
+        catch(Exception e) {
+            System.out.println("Nenhum user novo!");
+        }
+    }
+    
+    
+    private void save_info_tablespaces(){
+        try{
+            for (TableSpaceInfo value : tablespace.values()) {
+                ArrayList<String> al = tableset_user.get(value.tablespace);
+                String ts_df = tableset_datafile.get(value.tablespace);
+                if(al != null)
+                    for(String s : al) {
+                        String run =  "insert into tablespaces values('" + value.tablespace + "', " + value.pct_used + ", " +
+                                  value.total_mb + ", " + value.used_mb + ", " + value.free_mb +
+                                  ", " + value.datafiles + ", '" + s + "', " +
+                                  (ts_df!=null?("'"+ts_df+"'"):"NULL") + ")";
+                        PreparedStatement ps = this.c.prepareStatement(run);
+                        ResultSet rs = ps.executeQuery();
+                    }
+            }
+        }
+        catch(Exception e) {
+            System.out.println("Nenhum tablespaces novo!");
+        }
+    }
+    
+    
+    private void save_info_tables(){
+        try{
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy/MM/dd hh:mm:ss");
+            String dataStr = ft.format(date);
+            
+            for (TablesInfo value : tables) {
+                String run =  "insert into tables values(TO_DATE('" + dataStr + "', 'YYYY/MM/DD HH:MI:SS'), '" + value.schema +
+                              "', '" + value.object + "', " + value.object_size + ", '" + value.tablespace + "')";
+
+                PreparedStatement ps = this.c.prepareStatement(run);
+                ResultSet rs = ps.executeQuery();
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro na escrita de dados tables!");
         }
     }
     
@@ -126,5 +241,10 @@ public class DataBaseInfo implements Runnable {
         save_info_memory();
         save_info_cpu();
         save_info_sessions();
+        save_info_datafiles();
+        save_info_grants();
+        save_info_users();
+        save_info_tablespaces();
+        save_info_tables();
     }
 }

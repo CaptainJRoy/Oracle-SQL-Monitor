@@ -5,9 +5,13 @@
  */
 package insertionDB;
 
+import database.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,6 +58,16 @@ public class CreateTables implements Runnable {
     
     @Override
     public void run() {
+        try {
+            Connection c2 = new Connect().connect_sys();
+            String getTS =  "alter system set open_cursors = 65535 scope=both";
+            PreparedStatement ps = c2.prepareStatement(getTS);
+            ResultSet rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateTables.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         clearTabela("MEMORY");
         dropTabela("MEMORY");
         clearTabela("CPU");
@@ -164,6 +178,7 @@ public class CreateTables implements Runnable {
                     ", CONSTRAINT TABLESPACES_PK PRIMARY KEY \n" +
                     "  (\n" +
                     "    TABLESPACE \n" +
+                    "  , USERNAME \n" +
                     "  )\n" +
                     "  ENABLE \n" +
                     ")");
