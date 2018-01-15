@@ -6,6 +6,7 @@
 		<style>
 			body {background-color: #A9A9A9;}
 			h1	{
+					font-size: 30px;
 					align-self: center;
 					text-align: center;
 				}
@@ -22,14 +23,49 @@
 					align-self: center;
 					text-align: center;
 				}
+			ul {
+			    list-style-type: none;
+			    margin: auto auto;
+			    padding: 0;
+			    overflow: hidden;
+			    background-color: #333;
+			}
+			
+			li {
+				margin: auto;
+				display: inline-block;
+			}
+			
+			li a {
+				margin: auto;
+			    display: inline-block;
+			    color: white;
+			    text-align: center;
+			    padding: 14px 16px;
+			    text-decoration: none;
+			    font-size: 20px;
+			}
+			
+			/* Change the link color to #111 (black) on hover */
+			li a:hover {
+			    background-color: #111;
+			}
+			.wrapper{
+				text-align: center;
+				margin: 150px auto;
+			}
 			.container {
+				position: fixed;
+				top: 0;
+				left: 10%;
 	    		width: 80%;
-	    		height: 150px;
+	    		height: 125px;
 	    		background: dimgray;
 	    		margin: auto;
 	    		padding: 5px;
 	    		border-style: solid;
 	    		border-width: 5px;
+	    		text-align: center;
 			}
 			.one {
 			    width: 50%;
@@ -49,12 +85,12 @@
 	    		border-width: 1px;
 			}
 			.divtable{
-				margin: 10px auto 10px auto;
+				margin: 30px auto;
 				border-style: solid;
 	    		border-width: 1px;
 				text-align: center;
-				background: white;
 				display: table;
+				background: white;
 			}
 			.divTableRow {
 				margin: auto;
@@ -65,20 +101,51 @@
 				text-align: center;
 				display: table;
 			}
+			table{
+				margin: auto;
+			}
 	</style>
 		<title>Database Monitor</title>
 	</head>
 	<body style="background-color: 	#A9A9A9;">
-
-	<h1 >DataBase Monitor</h1>
+	<nav id="nav">
+		<ul class="container">
+		<h1 >DataBase Monitor</h1>
+			<li>
+				<a href="#divmemory">Memória</a>
+			</li>
+			<li>
+				<a href="#divcpu">CPU</a>
+			</li>
+			<li>
+				<a href="#DivDataFiles">DataFiles</a>
+			</li>
+			<li>
+				<a href="#divsessions">Sessions</a>
+			</li>
+			<li>
+				<a href="#grants">Grants</a>
+			</li>
+			<li>
+				<a href="#divusers">Users</a>
+			</li>
+			<li>
+				<a href="#divtablespaces">TableSpaces</a>
+			</li>
+			<li>
+				<a href="#divtables">Tables</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="wrapper">
 		<div class="divtable" id="divmemory">
-			<p>Memória TABELA</p>
+			<p>Memory</p>
 			<table border="2" id = "memorytab">
 				<tbody id = "tobdy1">
 				<tr>
-				<td>TimeStamps</td>
-				<td>SGA</td>
-				<td>PGA</td>
+				<td><b>TimeStamps</b></td>
+				<td><b>SGA</b></td>
+				<td><b>PGA</b></td>
 				</tr>
 				<tr id = "divmemoryrow">
 				<td id="timestamp_mem"></td>
@@ -93,14 +160,14 @@
 			<table border="2" id="cputab">
 				<tbody>
 				<tr>
-				<td>TimeStamp</td>
-				<td>#CpuCores</td>
-				<td>IOwait_time</td>
-				<td>nice_time</td>
-				<td>busy_time</td>
-				<td>user_time</td>
-				<td>num_cpus</td>
-				<td>iddle_time</td>
+				<td><b>TimeStamp</b></td>
+				<td><b>#CpuCores</b></td>
+				<td><b>IOwait_time</b></td>
+				<td><b>nice_time</b></td>
+				<td><b>busy_time</b></td>
+				<td><b>user_time</b></td>
+				<td><b>num_cpus</b></td>
+				<td><b>iddle_time</b></td>
 				</tr>
 				<tr>
 				<td id = timestamp_cpu ></td>
@@ -120,10 +187,10 @@
 			<table border="2" id="datafilestab">
 				<tbody>
 				<tr>
-				<td>filename</td>
-				<td>size_file</td>
-				<td>used</td>
-				<td>pct_used</td>
+				<td><b>filename</b></td>
+				<td><b>size_file</b></td>
+				<td><b>used</b></td>
+				<td><b>pct_used</b></td>
 				</tr>
 				<tr>
 				<td id ="filename"></td>
@@ -139,11 +206,11 @@
 			<table border="2" id="sessionstab">
 				<tbody>
 				<tr>
-				<td>Sid</td>
-				<td>timestamp</td>
-				<td>box</td>
-				<td>os_user</td>
-				<td>program</td>
+				<td><b>Sid</b></td>
+				<td><b>timestamp</b></td>
+				<td><b>box</b></td>
+				<td><b>os_user</b></td>
+				<td><b>program</b></td>
 				</tr>
 				<tr>
 				<td id = "sid"></td>
@@ -160,12 +227,12 @@
 			<table border="2" id="grantstab">
 				<tbody>
 				<tr>
-				<td>grantee</td>
-				<td>privilege</td>
-				<td>admin_option</td>
-				<td>common</td>
-				<td>inherited</td>
-				<td>timestamp</td>
+				<td><b>grantee</b></td>
+				<td><b>privilege</b></td>
+				<td><b>admin_option</b></td>
+				<td><b>common</b></td>
+				<td><b>inherited</b></td>
+				<td><b>timestamps</b></td>
 				</tr>
 				<tr>
 				<td id = "grantee" ></td>
@@ -183,10 +250,10 @@
 			<table border="2" id="userstab">
 				<tbody>
 				<tr>
-				<td>username</td>
-				<td>default_tablespace</td>
-				<td>temporary_tablespace</td>
-				<td>last_login</td>
+				<td><b>username</b></td>
+				<td><b>default_tablespace</b></td>
+				<td><b>temporary_tablespace</b></td>
+				<td><b>last_login</b></td>
 				</tr>
 				<tr>
 				<td id = "username"></td>
@@ -202,14 +269,14 @@
 			<table border="2" id="tablespacetab">
 				<tbody>
 				<tr>
-				<td>tablespace</td>
-				<td>pct_used</td>
-				<td>total_mb</td>
-				<td>used_mb</td>
-				<td>free_mb</td>
-				<td>datafiles</td>
-				<td>username</td>
-				<td>datafile_name</td>
+				<td><b>tablespace</b></td>
+				<td><b>pct_used</b></td>
+				<td><b>total_mb</b></td>
+				<td><b>used_mb</b></td>
+				<td><b>free_mb</b></td>
+				<td><b>datafiles</b></td>
+				<td><b>username</b></td>
+				<td><b>datafile_name</b></td>
 				</tr>
 				<tr>
 				<td id = "tablespace" ></td>
@@ -229,20 +296,23 @@
 			<table border="2" id="tablestab">
 				<tbody>
 				<tr>
-				<td>TimeStamp</td>
-				<td>Schema</td>
-				<td>Object</td>
-				<td>Object_size</td>
+				<td><b>TimeStamp</b></td>
+				<td><b>Schema</b></td>
+				<td><b>Object</b></td>
+				<td><b>Object_size</b></td>
+				<td><b>TableSpace</b></td>
 				</tr>
 				<tr>
 				<td id = "timestamp_tables" ></td>
 				<td id = "schema" ></td>
 				<td id = "object" ></td>
 				<td id = "object_size" ></td>
+				<td></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
+	</div>
 	<footer>
 		<h5 >Desenvolvido por Bruno Machado, João Alves, João Miguel</h5>
 		<h6 >no âmbito da UC Administração e Exploração de Base de Dados</h6>

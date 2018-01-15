@@ -100,7 +100,7 @@ console.log(response3);
 
 var response4;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/sessions' , function(response) {
-        response2 = JSON.parse(response);
+        response4 = JSON.parse(response);
 
         var table = document.getElementById('sessionstab');
     	var x = table.rows.length;
