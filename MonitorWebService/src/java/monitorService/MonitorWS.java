@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
@@ -83,17 +82,18 @@ public class MonitorWS {
             ResultSet rs = ps.executeQuery();
             
             StringBuilder sb = new StringBuilder();
-            sb.append("{memory:[");
+            sb.append("{\"memory\":[");
             while(rs.next()) {
-                sb.append("{timestamp:");
+                sb.append("{\"timestamp\":\"");
                 sb.append(rs.getDate(1));
-                sb.append(",sga:");
+                sb.append("\",\"sga\":");
                 sb.append(rs.getFloat(2));
-                sb.append(",pga:");
+                sb.append(",\"pga\":");
                 sb.append(rs.getFloat(3));
                 sb.append("},");
             }
-            sb.append("null]}");
+            sb.setCharAt(sb.length()-1, ']');
+            sb.append("}");
             
             System.out.println(sb.toString());
             return sb.toString();
@@ -114,27 +114,28 @@ public class MonitorWS {
             ResultSet rs = ps.executeQuery();
                         
             StringBuilder sb = new StringBuilder();
-            sb.append("{cpu:[");
+            sb.append("{\"cpu\":[");
             while(rs.next()) {
-                sb.append("{timestamp:");
+                sb.append("{\"timestamp\":\"");
                 sb.append(rs.getDate(1));
-                sb.append(",num_cpu_cores:");
+                sb.append("\",\"num_cpu_cores\":");
                 sb.append(rs.getFloat(2));
-                sb.append(",iowait_time:");
+                sb.append(",\"iowait_time\":");
                 sb.append(rs.getFloat(3));
-                sb.append(",nice_time:");
+                sb.append(",\"nice_time\":");
                 sb.append(rs.getFloat(4));
-                sb.append(",busy_time:");
+                sb.append(",\"busy_time\":");
                 sb.append(rs.getFloat(5));
-                sb.append(",user_time:");
+                sb.append(",\"user_time\":");
                 sb.append(rs.getFloat(6));
-                sb.append(",num_cpus:");
+                sb.append(",\"num_cpus\":");
                 sb.append(rs.getFloat(7));
-                sb.append(",idle_time:");
+                sb.append(",\"iddle_time\":");
                 sb.append(rs.getFloat(8));
                 sb.append("},");
             }
-            sb.append("null]}");
+            sb.setCharAt(sb.length()-1, ']');
+            sb.append("}");
             
             System.out.println(sb.toString());
             return sb.toString();

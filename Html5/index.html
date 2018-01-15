@@ -1,330 +1,249 @@
 <!DOCTYPE html>
 <html>
-<script type="text/javascript" src="script.js"></script>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<head>
+		<script type="text/javascript" src="script.js"></script>
 		<style>
-		body {background-color: #A9A9A9;}
-		h1	{
+			body {background-color: #A9A9A9;}
+			h1	{
+					align-self: center;
+					text-align: center;
+				}
+			h5	{
 				align-self: center;
 				text-align: center;
 			}
-		h5	{
-			align-self: center;
-			text-align: center;
-		}
-		h6	{
-			margin: 0;
-			align-self: center;
-			text-align: center;
-		}
-		p    {
+			h6	{
+				margin: 0;
 				align-self: center;
 				text-align: center;
 			}
-		.container {
-    		width: 80%;
-    		height: 150px;
-    		background: dimgray;
-    		margin: auto;
-    		padding: 5px;
-    		border-style: solid;
-    		border-width: 5px;
-		}
-		.one {
-		    width: 50%;
-		    height: 150px;
-		    background: blue;
-		    float: left;
-		    padding: 1px;
-		    border-style: solid;
-    		border-width: 1px;
-		}
-		.two {
-		    margin-left: 15%;
-		    height: 150px;
-		    background: black;
-		    padding: 1px;
-		    border-style: solid;
-    		border-width: 1px;
-		}
-		.divtable{
-			margin: 10px auto 10px auto;
-			border-style: solid;
-    		border-width: 1px;
-			text-align: center;
-			background: dimgray;
-			display: table;
-		}
-		.divTableRow {
-			margin: auto;
-			display: table-row;
-		}
-		.divTableBody {
-			margin: auto;
-			text-align: center;
-			display: table;
-		}
+			p    {
+					align-self: center;
+					text-align: center;
+				}
+			.container {
+	    		width: 80%;
+	    		height: 150px;
+	    		background: dimgray;
+	    		margin: auto;
+	    		padding: 5px;
+	    		border-style: solid;
+	    		border-width: 5px;
+			}
+			.one {
+			    width: 50%;
+			    height: 150px;
+			    background: blue;
+			    float: left;
+			    padding: 1px;
+			    border-style: solid;
+	    		border-width: 1px;
+			}
+			.two {
+			    margin-left: 15%;
+			    height: 150px;
+			    background: black;
+			    padding: 1px;
+			    border-style: solid;
+	    		border-width: 1px;
+			}
+			.divtable{
+				margin: 10px auto 10px auto;
+				border-style: solid;
+	    		border-width: 1px;
+				text-align: center;
+				background: white;
+				display: table;
+			}
+			.divTableRow {
+				margin: auto;
+				display: table-row;
+			}
+			.divTableBody {
+				margin: auto;
+				text-align: center;
+				display: table;
+			}
 	</style>
 		<title>Database Monitor</title>
 	</head>
 	<body style="background-color: 	#A9A9A9;">
-</section>
 
 	<h1 >DataBase Monitor</h1>
-	
-	<p style="color: darkkhaki">Here will be minions.</p>
-		<div class="divtable">
+		<div class="divtable" id="divmemory">
 			<p>Memória TABELA</p>
-			<table border="2">
-				<tbody>
+			<table border="2" id = "memorytab">
+				<tbody id = "tobdy1">
 				<tr>
 				<td>TimeStamps</td>
-				<td id="timestamp_mem"></td>
-				</tr>
-				<tr>
 				<td>SGA</td>
-				<td id="sga"></td>
+				<td>PGA</td>
 				</tr>
-				<tr>
-				<td>Pga</td>
-				<td id=pga></td>
+				<tr id = "divmemoryrow">
+				<td id="timestamp_mem"></td>
+				<td id="sga"></td>
+				<td id="pga"></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<div class="divtable">
+		<div class="divtable" id="divcpu">
 			<p>CPU</p>
-			<table border="2">
+			<table border="2" id="cputab">
 				<tbody>
 				<tr>
 				<td>TimeStamp</td>
-				<td id = timestamp_cpu ></td>
-				</tr>
-				<tr>
 				<td>#CpuCores</td>
-				<td id = cpu_cores></td>
-				</tr>
-				<tr>
 				<td>IOwait_time</td>
-				<td id= iowait ></td>
-				</tr>
-				<tr>
 				<td>nice_time</td>
-				<td id = nice></td>
-				</tr>
-				<tr>
 				<td>busy_time</td>
-				<td id = busy_time></td>
-				</tr>
-				<tr>
 				<td>user_time</td>
-				<td id= user_time></td>
-				</tr>
-				<tr>
 				<td>num_cpus</td>
-				<td id = n_cpu></td>
+				<td>iddle_time</td>
 				</tr>
 				<tr>
-				<td>iddle_time</td>
-				<td id=idlle_time></td>
+				<td id = timestamp_cpu ></td>
+				<td id = cpu_cores></td>
+				<td id= iowait ></td>
+				<td id = nice></td>
+				<td id = busy_time></td>
+				<td id= user_time></td>
+				<td id = n_cpu></td>
+				<td id=iddle_time></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<div class="divtable" id ="DataFiles">
+		<div class="divtable" id ="DivDataFiles">
 			<p>DataFiles</p>
-			<table border="2">
+			<table border="2" id="datafilestab">
 				<tbody>
 				<tr>
 				<td>filename</td>
-				<td>
-				</td>
-				</tr>
-				<tr>
 				<td>size_file</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>used</td>
-				<td>&nbsp;</td>
+				<td>pct_used</td>
 				</tr>
 				<tr>
-				<td>pct_used</td>
-				<td>&nbsp;</td>
+				<td id ="filename"></td>
+				<td id ="size_file"></td>
+				<td id = "used"></td>
+				<td id = "pct_used"></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<div class="divtable">
+		<div class="divtable" id="divsessions">
 			<p>Sessions</p>
-			<table border="2">
+			<table border="2" id="sessionstab">
 				<tbody>
 				<tr>
 				<td>Sid</td>
-				<td>
-				</td>
-				</tr>
-				<tr>
 				<td>timestamp</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>box</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>os_user</td>
-				<td>&nbsp;</td>
+				<td>program</td>
 				</tr>
 				<tr>
-				<td>program</td>
-				<td>&nbsp;</td>
+				<td id = "sid"></td>
+				<td id = "timestamp"></td>
+				<td id = "box"></td>
+				<td id = "os_user"></td>
+				<td id = "program"></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<div class="divtable">
+		<div class="divtable" id="grants">
 			<p>Grants</p>
 			<table border="2">
 				<tbody>
 				<tr>
 				<td>grantee</td>
-				<td>
-				</td>
-				</tr>
-				<tr>
 				<td>privilege</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>admin_option</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>common</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>inherited</td>
-				<td>&nbsp;</td>
+				<td>timestamp</td>
 				</tr>
 				<tr>
-				<td>timestamp</td>
-				<td>&nbsp;</td>
+				<td id = "grantee" ></td>
+				<td id = "privilege" ></td>
+				<td id = "admin_option" ></td>
+				<td id = "common" ></td>
+				<td id = "inherited" ></td>
+				<td id = "timestamp_grants" ></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<div class="divtable">
+		<div class="divtable" id="divusers">
 			<p>Users</p>
 			<table border="2">
 				<tbody>
 				<tr>
 				<td>username</td>
-				<td>
-				</td>
-				</tr>
-				<tr>
 				<td>default_tablespace</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>temporary_tablespace</td>
-				<td>&nbsp;</td>
+				<td>last_login</td>
 				</tr>
 				<tr>
-				<td>last_login</td>
-				<td>&nbsp;</td>
+				<td id = "username"></td>
+				<td id = "default_tablespace"></td>
+				<td id = "temporary_tablespace"></td>
+				<td id = "last_login"></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<button type="button"
-onclick="document.getElementById('TableSpaces').innerHTML+='<div><p>TableSpaces</p></div>'">
-Click me com carinho.</button>
-		<div class="divtable" id = "TableSpaces">
+		<div class="divtable" id = "divtablespaces">
 			<p>TableSpaces</p>
 			<table border="2">
 				<tbody>
 				<tr>
 				<td>tablespace</td>
-				<td>
-				</td>
-				</tr>
-				<tr>
 				<td>pct_used</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>total_mb</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>used_mb</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>free_mb</td>
-				<td>&nbsp;</td>
+				<td>datafiles</td>
 				</tr>
 				<tr>
-				<td>datafiles</td>
-				<td>&nbsp;</td>
+				<td id = "tablespace" ></td>
+				<td id = "pct_used_ts" ></td>
+				<td id = "total_mb" ></td>
+				<td id = "used_mb" ></td>
+				<td id = "free_mb" ></td>
+				<td id = "datafiles" ></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-		<div class="divtable">
+		<div class="divtable" id = "divtables">
 			<p>Tables</p>
 			<table border="2">
 				<tbody>
 				<tr>
 				<td>TimeStamp</td>
-				<td>
-				</td>
-				</tr>
-				<tr>
 				<td>Schema</td>
-				<td>&nbsp;</td>
-				</tr>
-				<tr>
 				<td>Object</td>
-				<td>&nbsp;</td>
+				<td>Object_size</td>
 				</tr>
 				<tr>
-				<td>Object_size</td>
-				<td>&nbsp;</td>
+				<td id = "timestamp_tables" ></td>
+				<td id = "schema" ></td>
+				<td id = "object" ></td>
+				<td id = "object_size" ></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
-	<!--Memory
-	CPU
-	DataFiles
-	Sessions
-	Grants
-	Users
-	TableSpaces
-	Tables
-
-	 -->
-	 <!--<script>
-if(typeof(EventSource) !== "undefined") {
-    var source = new EventSource("demo_sse.php");
-    source.onmessage = function(event) {
-        document.getElementById("result").innerHTML += event.data + "<br>";
-    };
-} else {
-    document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
-}
-</script>
-	-->
-	</body>
 	<footer>
-		<h5 >Desenvolvido por Bruno Machado, João Alves, João Miguel</h6>
+		<h5 >Desenvolvido por Bruno Machado, João Alves, João Miguel</h5>
 		<h6 >no âmbito da UC Administração e Exploração de Base de Dados</h6>
 		<h6 >Mestrado Integrado em Engenharia Informática</h6>
 		<h6 >Universidade do Minho, Janeiro de 2018</h6>
 	</footer>
+	</body>
 </html>

@@ -1,50 +1,76 @@
 var HttpClient = function() {
     this.get = function(aUrl, aCallback) {
         var anHttpRequest = new XMLHttpRequest();
-        anHttpRequest.onreadystatechange = function() { 
+
+        anHttpRequest.onreadystatechange = function() {
             if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
                 aCallback(anHttpRequest.responseText);
         }
 
-        anHttpRequest.open( "GET", aUrl, true );            
+        anHttpRequest.open( "GET", aUrl, true );
         anHttpRequest.send( null );
     }
 }
 
 var client = new HttpClient();
-client.get('http://localhost:8080/ords/personnel/manage/Memory', function(response) {
-        var response1 = JSON.parse(response);
+var response1;
+client.get('http://localhost:8084/MonitorWeb/webresources/access/memory', function(response) {
+        console.log(response);
+        response1 = JSON.parse(response);
+        var table = document.getElementById('memorytab');
+    		var x = table.rows.length;
 
-        document.getElementById('timestamp_mem').innerHTML = response1.items[0].timestamp;
-        document.getElementById('sga').innerHTML = response1.items[0].sga;
-        document.getElementById('pga').innerHTML = response1.items[0].pga;
+    		// Create an empty <tr> element and add it to the 1st position of the table:
+        var n = response1.memory.length;
+
+    		// Insert new cells (<td> elements) at the 1st and 2nd position of the :
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+
+          // Add some text to the new cells:
+          cell1.innerHTML = response1.memory[i-2].timestamp;
+          cell2.innerHTML = response1.memory[i-2].sga;
+          cell3.innerHTML = response1.memory[i-2].pga;
+        }
+
+
+/*
+        document.getElementById('timestamp_mem').innerHTML = response1.memory[0].timestamp;
+        document.getElementById('sga').innerHTML = response1.memory[0].sga;
+        document.getElementById('pga').innerHTML = response1.memory[0].pga;*/
 });
+console.log(response1);
 
-client.get('http://localhost:8080/ords/personnel/manage/CPU' , function(response) {
-        var response2 = JSON.parse(response);
+var response2;
+client.get('http://localhost:8084/MonitorWeb/webresources/access/cpu' , function(response) {
+        response2 = JSON.parse(response);
 
-        document.getElementById('timestamp_cpu').innerHTML = response2.items[0].timestamp;
-        document.getElementById('cpu_cores').innerHTML = response2.items[0].num_cpu_cores;
-        document.getElementById('iowait').innerHTML = response2.items[0].iowait_time;
-        document.getElementById('nice').innerHTML = response2.items[0].nice_time;
-        document.getElementById('busy_time').innerHTML = response2.items[0].busy_time;
-        document.getElementById('user_time').innerHTML = response2.items[0].user_time;
-        document.getElementById('n_cpu').innerHTML = response2.items[0].num_cpus;
-        document.getElementById('iddle_time').innerHTML = response2.items[0].iddle_time;
+        document.getElementById('timestamp_cpu').innerHTML = response2.cpu[0].timestamp;
+        document.getElementById('cpu_cores').innerHTML = response2.cpu[0].num_cpu_cores;
+        document.getElementById('iowait').innerHTML = response2.cpu[0].iowait_time;
+        document.getElementById('nice').innerHTML = response2.cpu[0].nice_time;
+        document.getElementById('busy_time').innerHTML = response2.cpu[0].busy_time;
+        document.getElementById('user_time').innerHTML = response2.cpu[0].user_time;
+        document.getElementById('n_cpu').innerHTML = response2.cpu[0].num_cpus;
+        document.getElementById('iddle_time').innerHTML = response2.cpu[0].iddle_time;
 });
+console.log(response2);
 
-client.get('http://localhost:8080/ords/personnel/manage/Datafiles' , function(response) {
+client.get('http://localhost:8084/MonitorWeb/webresources/access/datafiles' , function(response) {
         var response3 = JSON.parse(response);
 
         document.getElementById('filename').innerHTML = response3.items[0].filename;
         document.getElementById('size_file').innerHTML = response3.items[0].size_file;
         document.getElementById('used').innerHTML = response3.items[0].used;
         document.getElementById('pct_used').innerHTML = response3.items[0].pct_used;
-        
+
 });
 
-
-client.get('http://localhost:8080/ords/personnel/manage/Sessions' , function(response) {
+client.get('http://localhost:8084/MonitorWeb/webresources/access/sessions' , function(response) {
         var response4 = JSON.parse(response);
 
         document.getElementById('sid').innerHTML = response4.items[0].sid;
@@ -54,8 +80,7 @@ client.get('http://localhost:8080/ords/personnel/manage/Sessions' , function(res
         document.getElementById('program').innerHTML = response4.items[0].program;
 });
 
-
-client.get('http://localhost:8080/ords/personnel/manage/Grants' , function(response) {
+client.get('http://localhost:8084/MonitorWeb/webresources/access/grants' , function(response) {
         var response5 = JSON.parse(response);
 
         document.getElementById('grantee').innerHTML = response5.items[0].grantee;
@@ -66,8 +91,7 @@ client.get('http://localhost:8080/ords/personnel/manage/Grants' , function(respo
         document.getElementById('timestamp_grants').innerHTML = response5.items[0].timestamp_grants;
 });
 
-
-client.get('http://localhost:8080/ords/personnel/manage/Users' , function(response) {
+client.get('http://localhost:8084/MonitorWeb/webresources/access/users' , function(response) {
         var response6 = JSON.parse(response);
 
         document.getElementById('username').innerHTML = response6.items[0].username;
@@ -76,8 +100,7 @@ client.get('http://localhost:8080/ords/personnel/manage/Users' , function(respon
         document.getElementById('last_login').innerHTML = response6.items[0].last_login;
 });
 
-
-client.get('http://localhost:8080/ords/personnel/manage/Tablespaces' , function(response) {
+client.get('http://localhost:8084/MonitorWeb/webresources/access/tablespaces' , function(response) {
         var response7 = JSON.parse(response);
 
         document.getElementById('tablespace').innerHTML = response7.items[0].username;
@@ -88,7 +111,7 @@ client.get('http://localhost:8080/ords/personnel/manage/Tablespaces' , function(
         document.getElementById('datafiles').innerHTML = response7.items[0].datafiles;
 });
 
-client.get('http://localhost:8080/ords/personnel/manage/Tables' , function(response) {
+client.get('http://localhost:8084/MonitorWeb/webresources/access/tables' , function(response) {
         var response8 = JSON.parse(response);
 
         document.getElementById('timestamp_tables').innerHTML = response8.items[0].timestamp_tables;
