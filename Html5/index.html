@@ -157,7 +157,7 @@
 		</div>
 		<div class="divtable" id="grants">
 			<p>Grants</p>
-			<table border="2">
+			<table border="2" id="grantstab">
 				<tbody>
 				<tr>
 				<td>grantee</td>
@@ -180,7 +180,7 @@
 		</div>
 		<div class="divtable" id="divusers">
 			<p>Users</p>
-			<table border="2">
+			<table border="2" id="userstab">
 				<tbody>
 				<tr>
 				<td>username</td>
@@ -199,7 +199,7 @@
 		</div>
 		<div class="divtable" id = "divtablespaces">
 			<p>TableSpaces</p>
-			<table border="2">
+			<table border="2" id="tablespacetab">
 				<tbody>
 				<tr>
 				<td>tablespace</td>
@@ -208,6 +208,8 @@
 				<td>used_mb</td>
 				<td>free_mb</td>
 				<td>datafiles</td>
+				<td>username</td>
+				<td>datafile_name</td>
 				</tr>
 				<tr>
 				<td id = "tablespace" ></td>
@@ -216,13 +218,15 @@
 				<td id = "used_mb" ></td>
 				<td id = "free_mb" ></td>
 				<td id = "datafiles" ></td>
+				<td id = "username"></td>
+				<td id = "datafile_name"></td>
 				</tr>
 				</tbody>
 				</table>
 		</div>
 		<div class="divtable" id = "divtables">
 			<p>Tables</p>
-			<table border="2">
+			<table border="2" id="tablestab">
 				<tbody>
 				<tr>
 				<td>TimeStamp</td>

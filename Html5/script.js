@@ -18,12 +18,11 @@ client.get('http://localhost:8084/MonitorWeb/webresources/access/memory', functi
         console.log(response);
         response1 = JSON.parse(response);
         var table = document.getElementById('memorytab');
-    		var x = table.rows.length;
+    	var x = table.rows.length;
 
-    		// Create an empty <tr> element and add it to the 1st position of the table:
         var n = response1.memory.length;
 
-    		// Insert new cells (<td> elements) at the 1st and 2nd position of the :
+
         for(let i = 2; i < n + 2; i++) {
           var row = table.insertRow(i);
 
@@ -31,17 +30,11 @@ client.get('http://localhost:8084/MonitorWeb/webresources/access/memory', functi
           var cell2 = row.insertCell(1);
           var cell3 = row.insertCell(2);
 
-          // Add some text to the new cells:
           cell1.innerHTML = response1.memory[i-2].timestamp;
           cell2.innerHTML = response1.memory[i-2].sga;
           cell3.innerHTML = response1.memory[i-2].pga;
         }
 
-
-/*
-        document.getElementById('timestamp_mem').innerHTML = response1.memory[0].timestamp;
-        document.getElementById('sga').innerHTML = response1.memory[0].sga;
-        document.getElementById('pga').innerHTML = response1.memory[0].pga;*/
 });
 console.log(response1);
 
@@ -49,73 +42,206 @@ var response2;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/cpu' , function(response) {
         response2 = JSON.parse(response);
 
-        document.getElementById('timestamp_cpu').innerHTML = response2.cpu[0].timestamp;
-        document.getElementById('cpu_cores').innerHTML = response2.cpu[0].num_cpu_cores;
-        document.getElementById('iowait').innerHTML = response2.cpu[0].iowait_time;
-        document.getElementById('nice').innerHTML = response2.cpu[0].nice_time;
-        document.getElementById('busy_time').innerHTML = response2.cpu[0].busy_time;
-        document.getElementById('user_time').innerHTML = response2.cpu[0].user_time;
-        document.getElementById('n_cpu').innerHTML = response2.cpu[0].num_cpus;
-        document.getElementById('iddle_time').innerHTML = response2.cpu[0].iddle_time;
+        var table = document.getElementById('cputab');
+    	var x = table.rows.length;
+
+        var n = response2.cpu.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+          var cell6 = row.insertCell(5);
+          var cell7 = row.insertCell(6);
+          var cell8 = row.insertCell(7);
+
+          cell1.innerHTML = response2.cpu[i-2].timestamp;
+          cell2.innerHTML = response2.cpu[i-2].num_cpu_cores;
+          cell3.innerHTML = response2.cpu[i-2].iowait_time;
+          cell4.innerHTML = response2.cpu[i-2].nice_time;
+          cell5.innerHTML = response2.cpu[i-2].busy_time;
+          cell6.innerHTML = response2.cpu[i-2].user_time;
+          cell7.innerHTML = response2.cpu[i-2].num_cpus;
+          cell8.innerHTML = response2.cpu[i-2].iddle_time;
+        }
 });
 console.log(response2);
 
+var response3;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/datafiles' , function(response) {
-        var response3 = JSON.parse(response);
+        response3 = JSON.parse(response);
 
-        document.getElementById('filename').innerHTML = response3.items[0].filename;
-        document.getElementById('size_file').innerHTML = response3.items[0].size_file;
-        document.getElementById('used').innerHTML = response3.items[0].used;
-        document.getElementById('pct_used').innerHTML = response3.items[0].pct_used;
+        var table = document.getElementById('datafilestab');
+    	var x = table.rows.length;
 
+        var n = response3.datafiles.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+
+          cell1.innerHTML = response3.datafiles[i-2].filename;
+          cell2.innerHTML = response3.datafiles[i-2].size_file;
+          cell3.innerHTML = response3.datafiles[i-2].used;
+          cell4.innerHTML = response3.datafiles[i-2].pct_used;
+        }
 });
+console.log(response3);
 
+var response4;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/sessions' , function(response) {
-        var response4 = JSON.parse(response);
+        response2 = JSON.parse(response);
 
-        document.getElementById('sid').innerHTML = response4.items[0].sid;
-        document.getElementById('timestamp').innerHTML = response4.items[0].timestamp;
-        document.getElementById('box').innerHTML = response4.items[0].box;
-        document.getElementById('os_user').innerHTML = response4.items[0].os_user;
-        document.getElementById('program').innerHTML = response4.items[0].program;
+        var table = document.getElementById('sessionstab');
+    	var x = table.rows.length;
+
+        var n = response4.sessions.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+
+          cell1.innerHTML = response4.sessions[i-2].sid;
+          cell2.innerHTML = response4.sessions[i-2].timestamp;
+          cell3.innerHTML = response4.sessions[i-2].box;
+          cell4.innerHTML = response4.sessions[i-2].os_user;
+          cell5.innerHTML = response4.sessions[i-2].program;
+        }
 });
+console.log(response4);
 
+var response5;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/grants' , function(response) {
-        var response5 = JSON.parse(response);
+        response5 = JSON.parse(response);
 
-        document.getElementById('grantee').innerHTML = response5.items[0].grantee;
-        document.getElementById('privilege').innerHTML = response5.items[0].privilege;
-        document.getElementById('admin_option').innerHTML = response5.items[0].admin_option;
-        document.getElementById('common').innerHTML = response5.items[0].common;
-        document.getElementById('inherited').innerHTML = response5.items[0].inherited;
-        document.getElementById('timestamp_grants').innerHTML = response5.items[0].timestamp_grants;
+        var table = document.getElementById('grantstab');
+    	var x = table.rows.length;
+
+        var n = response5.grants.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+          var cell6 = row.insertCell(5);
+
+          cell1.innerHTML = response5.grants[i-2].grantee;
+          cell2.innerHTML = response5.grants[i-2].privilege;
+          cell3.innerHTML = response5.grants[i-2].admin_option;
+          cell4.innerHTML = response5.grants[i-2].common;
+          cell5.innerHTML = response5.grants[i-2].inherited;
+          cell6.innerHTML = response5.grants[i-2].timestamp;
+        }
 });
+console.log(response5);
 
+var response6;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/users' , function(response) {
-        var response6 = JSON.parse(response);
+        response6 = JSON.parse(response);
 
-        document.getElementById('username').innerHTML = response6.items[0].username;
-        document.getElementById('default_tablespace').innerHTML = response6.items[0].default_tablespace;
-        document.getElementById('temporary_tablespace').innerHTML = response6.items[0].temporary_tablespace;
-        document.getElementById('last_login').innerHTML = response6.items[0].last_login;
+        var table = document.getElementById('userstab');
+    	var x = table.rows.length;
+
+        var n = response6.users.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+
+          cell1.innerHTML = response6.users[i-2].username;
+          cell2.innerHTML = response6.users[i-2].default_tablespace;
+          cell3.innerHTML = response6.users[i-2].temporary_tablespace;
+          cell4.innerHTML = response6.users[i-2].last_login;
+        }
 });
+console.log(response6);
 
+var response7;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/tablespaces' , function(response) {
-        var response7 = JSON.parse(response);
+        response7 = JSON.parse(response);
 
-        document.getElementById('tablespace').innerHTML = response7.items[0].username;
-        document.getElementById('pct_used_ts').innerHTML = response7.items[0].pct_used_ts;
-        document.getElementById('total_mb').innerHTML = response7.items[0].total_mb;
-        document.getElementById('used_mb').innerHTML = response7.items[0].used_mb;
-        document.getElementById('free_mb').innerHTML = response7.items[0].free_mb;
-        document.getElementById('datafiles').innerHTML = response7.items[0].datafiles;
+        var table = document.getElementById('tablespacetab');
+    	var x = table.rows.length;
+
+        var n = response7.tablespaces.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+          var cell6 = row.insertCell(5);
+          var cell7 = row.insertCell(6);
+          var cell8 = row.insertCell(7);
+
+          cell1.innerHTML = response7.tablespaces[i-2].tablespace;
+          cell2.innerHTML = response7.tablespaces[i-2].pct_used;
+          cell3.innerHTML = response7.tablespaces[i-2].total_mb;
+          cell4.innerHTML = response7.tablespaces[i-2].used_mb;
+          cell5.innerHTML = response7.tablespaces[i-2].free_mb;
+          cell6.innerHTML = response7.tablespaces[i-2].datafiles;
+          cell7.innerHTML = response7.tablespaces[i-2].username;
+          cell8.innerHTML = response7.tablespaces[i-2].datafile_name;
+        }
 });
+console.log(response7);
 
+
+var response8;
 client.get('http://localhost:8084/MonitorWeb/webresources/access/tables' , function(response) {
-        var response8 = JSON.parse(response);
+        response8 = JSON.parse(response);
 
-        document.getElementById('timestamp_tables').innerHTML = response8.items[0].timestamp_tables;
-        document.getElementById('schema').innerHTML = response8.items[0].schema;
-        document.getElementById('object').innerHTML = response8.items[0].object;
-        document.getElementById('object_size').innerHTML = response8.items[0].object_size;
+        var table = document.getElementById('tablestab');
+    	var x = table.rows.length;
+
+        var n = response8.tables.length;
+
+
+        for(let i = 2; i < n + 2; i++) {
+          var row = table.insertRow(i);
+
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+
+
+          cell1.innerHTML = response8.tables[i-2].timestamp;
+          cell2.innerHTML = response8.tables[i-2].schema;
+          cell3.innerHTML = response8.tables[i-2].object;
+          cell4.innerHTML = response8.tables[i-2].object_size;
+          cell5.innerHTML = response8.tables[i-2].tablespace;
+        }
 });
+console.log(response8);
