@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<script type="text/javascript" src="script.js"></script>
 	<meta charset="UTF-8">
 	<head>
 		<style>
@@ -70,7 +71,6 @@
 	<body style="background-color: 	#A9A9A9;">
 </section>
 
-
 	<h1 >DataBase Monitor</h1>
 	
 	<p style="color: darkkhaki">Here will be minions.</p>
@@ -80,15 +80,15 @@
 				<tbody>
 				<tr>
 				<td>TimeStamps</td>
-				<td>&nbsp;</td>
+				<td id="timestamp_mem"></td>
 				</tr>
 				<tr>
-				<td>Sga</td>
-				<td>&nbsp;</td>
+				<td>SGA</td>
+				<td id="sga"></td>
 				</tr>
 				<tr>
 				<td>Pga</td>
-				<td>&nbsp;</td>
+				<td id=pga></td>
 				</tr>
 				</tbody>
 				</table>
@@ -99,36 +99,35 @@
 				<tbody>
 				<tr>
 				<td>TimeStamp</td>
-				<td>
-				</td>
+				<td id = timestamp_cpu ></td>
 				</tr>
 				<tr>
 				<td>#CpuCores</td>
-				<td>&nbsp;</td>
+				<td id = cpu_cores></td>
 				</tr>
 				<tr>
 				<td>IOwait_time</td>
-				<td>&nbsp;</td>
+				<td id= iowait ></td>
 				</tr>
 				<tr>
 				<td>nice_time</td>
-				<td>&nbsp;</td>
+				<td id = nice></td>
 				</tr>
 				<tr>
 				<td>busy_time</td>
-				<td>&nbsp;</td>
+				<td id = busy_time></td>
 				</tr>
 				<tr>
 				<td>user_time</td>
-				<td>&nbsp;</td>
+				<td id= user_time></td>
 				</tr>
 				<tr>
 				<td>num_cpus</td>
-				<td>&nbsp;</td>
+				<td id = n_cpu></td>
 				</tr>
 				<tr>
 				<td>iddle_time</td>
-				<td>&nbsp;</td>
+				<td id=idlle_time></td>
 				</tr>
 				</tbody>
 				</table>
