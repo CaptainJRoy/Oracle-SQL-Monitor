@@ -197,7 +197,7 @@ public class MonitorWS {
             while(rs.next()) {
                 sb.append("{\"grantee\":\"");
                 sb.append(rs.getString(1));
-                sb.append("\",\"privilege\":");
+                sb.append("\",\"privilege\":\"");
                 sb.append(rs.getString(2));
                 sb.append("\",\"admin_option\":");
                 sb.append(rs.getFloat(3) == 1);
